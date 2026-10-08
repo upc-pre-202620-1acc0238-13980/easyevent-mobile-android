@@ -10,9 +10,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
 
 @Composable
-fun MainNavigationBar() {
+fun MainNavigationBar(navController: NavController) {
 
     var selectedItem by rememberSaveable {
         mutableStateOf(NavigationItem.entries.first())
@@ -25,6 +26,15 @@ fun MainNavigationBar() {
             NavigationBarItem(
                 selected = selected,
                 onClick = {
+                    navController.navigate(item.route) {
+                        popUpTo(selectedItem.route) {
+                            saveState = true
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+
                     selectedItem = item
                 },
                 icon = {

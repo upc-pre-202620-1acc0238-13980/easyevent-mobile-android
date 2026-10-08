@@ -16,12 +16,12 @@ fun MainScreen() {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
-            MainNavigationBar()
+            MainNavigationBar(navController)
         }
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = HomeRoute,
+            startDestination = NavigationItem.entries.first().route,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable<HomeRoute> {
